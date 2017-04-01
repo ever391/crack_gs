@@ -43,26 +43,45 @@ class CrackSlide(object):
         image2 = self.get_image("//div[@class='gt_cut_fullbg gt_show']/div")
         offset = self.get_diff_location(image1, image2)
         track_list = self.get_track(offset)
-        self.drag_and_drop(track_list)
+        self.drag_and_drop(track_list, offset)
         time.sleep(2)
         content =  self.browser.page_source
         self.browser.delete_all_cookies()
         self.browser.quit()
         return content
 
-    def drag_and_drop(self, track_list):
+    def drag_and_drop(self, track_list, offset):
         element = self.browser.find_element_by_xpath("//div[@class='gt_slider_knob gt_show']")
         location = element.location
         y = location['y']
         ActionChains(self.browser).click_and_hold(on_element=element).perform()
-        time.sleep(random.randint(40, 80) / 100)
+        num = 30
+        count = 0
+
         for track in track_list:
+
+            ActionChains(self.browser).move_to_element_with_offset(to_element=element, xoffset=22,
+                                                             yoffset=random.randint(380, 390)).perform()
+            time.sleep(0.01)
+
+        for track in track_list:
+
+            ActionChains(self.browser).move_to_element_with_offset(to_element=element, xoffset=-22,
+                                                             yoffset=random.randint(380, 390)).perform()
+            time.sleep(0.01)
+
+        for track in track_list:
+
             ActionChains(self.browser).move_to_element_with_offset(to_element=element, xoffset=track + 22,
-                                                             yoffset=y).perform()
-            time.sleep(random.randint(40, 80) / 100)
+                                                             yoffset=random.randint(380, 390)).perform()
+            count += 1
+            if count < num:
+                time.sleep(0.01)
+            else:
+                time.sleep(0.1)
         for i in xrange(5):
-            ActionChains(self.browser).move_to_element_with_offset(to_element=element, xoffset=21, yoffset=y).perform()
-            time.sleep(0.2)
+            ActionChains(self.browser).move_to_element_with_offset(to_element=element, xoffset=21, yoffset=random.randint(380, 390)).perform()
+            time.sleep(0.1)
         ActionChains(self.browser).release(on_element=element).perform()
 
     def input_text(self, text, el_id='keyword'):
@@ -116,9 +135,9 @@ class CrackSlide(object):
         im_list_down=[]
         for location in location_list:
             if location['y']==-58:
-                im_list_upper.append(im.crop((abs(location['x']), 58, abs(location['x'])+10,166)))
+                im_list_upper.append(im.crop((abs(location['x']), 58, abs(location['x'])+10, 166)))
             if location['y']==0:
-                im_list_down.append(im.crop((abs(location['x']), 0, abs(location['x'])+10,58)))
+                im_list_down.append(im.crop((abs(location['x']), 0, abs(location['x'])+10, 58)))
         new_im = image.new('RGB', (260,116))
         x_offset = 0
         for im in im_list_upper:
@@ -146,11 +165,11 @@ class CrackSlide(object):
 
     def get_track(self, offset):
         list = []
-        x = random.randint(1, 5)
+        x = random.randint(3, 8)
         while offset - x >= 5:
             list.append(x)
             offset = offset - x
-            x = random.randint(1, 5)
+            x = random.randint(2, 3)
         for i in range(offset):
             list.append(1)
         return list
