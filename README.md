@@ -6,7 +6,7 @@
 
 
 ## 使用说明：
-- 调用crack_slide_captchar.py文件
+- 调用crack_slide_captcha.py文件
 - 实例化CrackSlide对象
 - 执行exec_crack.run方法 参数：is_display 是否显示， 值为True/False
 - 返回通过验证码以后的结果
