@@ -1,7 +1,7 @@
 # 全国工商企业信息查询 验证码破解
 全国工商企业信息查询 验证码破解 
 
-##如果你喜欢，不要只是Fork, 请给我一个Star,你们的Star是我维护的动力呀！谢谢！
+## 如果你喜欢，不要只是Fork, 请给我一个Star,你们的Star是我维护的动力呀！谢谢！
 
 ## 项目演式
 ![image](https://github.com/ever391/crack_gs/blob/master/crack.gif)
